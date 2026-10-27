@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { treinadorController } from "../controllers/treinador.controllers";
+import { treinadorController } from "../controllers/treinador.controllers.js";
 
 export const treinadorRouter = Router();
 

@@ -1,44 +1,35 @@
-import { pool } from "../database/db.js";
-import { knex } from "../database/knex.js";
+import { treinadorRepository } from "../repositories/treinador.repository.js";
 
 class TreinadorService{
     async getall() {
-        const res = await pool.query("SELECT * FROM treinador")
-        return res.rows
+        const res = await treinadorRepository.getall();
+        return res;
     }
 
     async create({nome}) {
-        const res = await pool.query("INSERT INTO treinador (nome) VALUES ($1) RETURNING *", [nome]);
-        return res.rows[0]
+        const res = await treinadorRepository.create(nome);
+        return res;
     }
 
     async getById(id) {
-        const res = await pool.query("SELECT * FROM treinador WHERE id_treinador = $1", [id])
-        return res.rows[0]
+        const res = await treinadorRepository.getById(id);
+        return res;
     }
 
     async delete(id){
-        const res = await pool.query("DELETE FROM treinador WHERE id_treinador = $1 RETURNING *", [id])
-        return {
-            message: "treinador deletado com sucesso",
-            Treinador: res.rows[0]
-        }
+        const res = await treinadorRepository.delete(id);
+        return res;
     }
     
     async updatePut(id, data){
-        const res = await pool.query("UPDATE treinador SET nome=$2 WHERE id_treinador = $1 RETURNING *", [id, data.nome])
-        return {
-            message: "treinador atualizado com sucesso!",
-            Treinador: res.rows[0]
-        }
+        const res = await treinadorRepository.updatePut(id,data);
+        return res;
     }
 
     async updateKnex (id_treinador, dados) {
-        const treinadorAtualizado = await knex("treinador").where({ id_treinador }).update(dados).returning("*")
-        return {
-            message: "treinador atualizado com sucesso!",
-            treinadorAtualizado
-        }
-    }
-}
+        const treinadorAtualizado = await treinadorRepository.updateKnex(id_treinador,dados);
+        return treinadorAtualizado;
+    };
+};
+
 export const treinadorService = new TreinadorService()

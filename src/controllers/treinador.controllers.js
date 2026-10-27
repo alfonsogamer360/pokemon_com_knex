@@ -1,64 +1,64 @@
-import { pokemonService } from "../services/pokemon.Services.js";
+import { treinadorService } from "../services/treinador.Services.js";
 
-class PokemonController {
+class TreinadorController {
     
     async getall(req, res) {
     try {
-        const pokemon = await pokemonService.getall();
-        res.json(pokemon);
+        const treinador = await treinadorService.getall();
+        res.json(treinador);
     }catch (error) {
         console.error (error);
-        res.status(500).json({error: "Erro ao pegar pokemon"})
+        res.status(500).json({error: "Erro ao pegar treinador"})
     }}
 
     async getById(req, res) {
-    const pokemonId = req.params.id
+    const treinadorId = req.params.id
     try {
-        const pokemon = await pokemonService.getById(pokemonId);
-        res.json(pokemon);
+        const treinador = await treinadorService.getById(treinadorId);
+        res.json(treinador);
     } catch (error) {
         console.error (error);
-        res.status(500).json({error: "Erro ao pegar pelo id pokemon"})
+        res.status(500).json({error: "Erro ao pegar pelo id treinador"})
     }}
 
     async create(req, res)  {
     try {
-        const pokemon = await pokemonService.create(req.body);
-         res.status(201).json(pokemon);
+        const treinador = await treinadorService.create(req.body);
+         res.status(201).json(treinador);
     }catch (error) {
         console.error (error);
-        res.status(500).json({error: "Erro ao enviar pokemon"})
+        res.status(500).json({error: "Erro ao enviar treinador"})
     }};
     
     async delete(req, res) {
-    const pokemonId = req.params.id
+    const treinadorId = req.params.id
     try {
-        const pokemon = await pokemonService.delete(pokemonId);
-         res.status(201).json(pokemon);
+        const treinador = await treinadorService.delete(treinadorId);
+         res.status(201).json(treinador);
     }catch (error) {
         console.error (error);
-        res.status(500).json({error: "Erro ao remover pokemon"})
+        res.status(500).json({error: "Erro ao remover treinador"})
     }};
 
     async updatePut(req,res)  {
-    const pokemonId = req.params.id;
+    const treinadorId = req.params.id;
     try {
-        const pokemonAtualizado = await pokemonService.updatePut(pokemonId, req.body)
-        res.status(201).json(pokemonAtualizado)
+        const treinadorAtualizado = await treinadorService.updatePut(treinadorId, req.body)
+        res.status(201).json(treinadorAtualizado)
     } catch (error) {
         console.error(error);
-        res.status(500).json({error: "Erro ao atualizar pokemon"})
+        res.status(500).json({error: "Erro ao atualizar treinador"})
     }};
 
     async updateKnex(req,res) {
-    const pokemonId = req.params.id;
+    const treinadorId = req.params.id;
     try {
-        const pokemonAtualizado = await pokemonService.updateKnex(pokemonId, req.body)
-        res.status(201).json(pokemonAtualizado)
+        const treinadorAtualizado = await treinadorService.updateKnex(treinadorId, req.body)
+        res.status(201).json(treinadorAtualizado)
     } catch (error) {
         console.error(error);
-        res.status(500).json({error: "Erro ao atualizar pokemon"})
+        res.status(500).json({error: "Erro ao atualizar treinador"})
     }};
 }
 
-export const pokemonController = new PokemonController()
+export const treinadorController = new TreinadorController()

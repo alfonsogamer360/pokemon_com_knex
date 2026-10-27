@@ -6,8 +6,8 @@ const port = 3000
 const app = express();
 
 app.use(express.json())
-app.use("/", pokemonRouter)
-app.use("/", treinadorRouter)
+app.use("/pokemon", pokemonRouter)
+app.use("/treinador", treinadorRouter)
 
 app.listen (port, () => {
     console.log(`App rodando em http://localhost:${port}`);

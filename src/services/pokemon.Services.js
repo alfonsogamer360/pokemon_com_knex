@@ -1,45 +1,35 @@
-import { pool } from "../database/db.js";
-import { knex } from "../database/knex.js";
+import { pokemonRepository } from "../repositories/pokemon.repository.js";
 
 class PokemonService{
     async getall() {
-        const res = await pool.query("SELECT * FROM pokemon")
-        return res.rows
+        const pokemonPegar = await pokemonRepository.getall();
+        return pokemonPegar;
     }
 
     async create({nome, nivel, tipo}) {
-        const res = await pool.query("INSERT INTO pokemon (nome,nivel,tipo) VALUES ($1, $2, $3) RETURNING *", [nome,nivel,tipo]);
-        return res.rows[0]
+        const pokemonCriado = await pokemonRepository.create(nome,nivel,tipo);
+        return pokemonCriado;
     }
 
     async getById(id) {
-        const res = await pool.query("SELECT * FROM pokemon WHERE id_pokemon = $1", [id])
-        return res.rows[0]
+        const pokemonPegarId = await pokemonRepository.getById(id);
+        return pokemonPegarId;
     }
 
     async delete(id){
-        const res = await pool.query("DELETE FROM pokemon WHERE id_pokemon = $1 RETURNING *", [id])
-        return {
-            message: "Pokemon deletado com sucesso",
-            veiculo: res.rows[0]
-        }
+        const pokemonDeletado = await pokemonRepository.delete(id);
+        return pokemonDeletado;
     }
     
     async updatePut(id, data){
-        const res = await pool.query("UPDATE pokemon SET nome=$2, nivel=$3, tipo=$4 WHERE id_pokemon = $1  RETURNING *", [id, data.nome, data.nivel, data.tipo])
-        return {
-            message: "Pokemon atualizado com sucesso!",
-            veiculo: res.rows[0]
-        }
+        const pokemonAtualizadoPut = await pokemonRepository.updatePut(id,data);
+        return pokemonAtualizadoPut;
     }
 
     async updateKnex (id_pokemon, dados) {
-        const pokemonAtualizado = await knex("pokemon").where({ id_pokemon }).update(dados).returning("*")
-        return {
-            message: "Pokemon atualizado com sucesso!",
-            pokemonAtualizado
-        }
-    }
-}
+        const pokemonAtualizado = await pokemonRepository.updateKnex(id_pokemon,dados);
+        return pokemonAtualizado;
+    };
+};
 
 export const pokemonService = new PokemonService()
